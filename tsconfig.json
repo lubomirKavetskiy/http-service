@@ -1,5 +1,5 @@
 {
-  "include": ["src/**/*"],
+  "include": ["src/**/**/*", "useHook/useFetch.ts"],
   "compilerOptions": {
     "baseUrl": "src",
     "target": "es5",

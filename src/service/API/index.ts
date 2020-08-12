@@ -1,9 +1,10 @@
-import { PostsAPIservice } from "./posts";
-import { CommentsAPIservice } from "./comments";
+import {UsersAPIservice} from './users';
 
-const API_URL = "https://jsonplaceholder.typicode.com";
+// const API_URL = 'https://gorest.co.in/public-api';
+const API_URL = 'https://jsonplaceholder.typicode.com';
 
-const posts = new PostsAPIservice(API_URL);
-const comments = new CommentsAPIservice(API_URL);
+//const TOKEN = 'OKMiKDWt0QOe3e7L69eYKrsnqSu9M_dJ81Ns';
 
-export const api = { posts, comments };
+//const users = UsersAPIservice(API_URL, TOKEN);
+const users = UsersAPIservice(API_URL);
+export const api = {users};
