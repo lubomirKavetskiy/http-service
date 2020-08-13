@@ -28,7 +28,7 @@ export class CommentsAPIservice extends MainAPI {
   }
 
   createComment(body: ICreateCommentBody) {
-    return this.post<any>(commentsEndpoints.root, body);
+    return this.post<ICommentResp>(commentsEndpoints.root, body);
   }
 
   updateCommentEntire(id: TCommentId, body: IEntireUpdCommentBoby) {

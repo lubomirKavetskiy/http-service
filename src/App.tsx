@@ -3,7 +3,14 @@ import * as React from 'react';
 import {api} from 'service/API';
 
 export default function App() {
-  api.posts.deletePostById(1).then(r => console.log(r));
+  api.comments
+    .createComment({
+      body: 'test',
+      name: 'name',
+      postId: 23,
+      email: 'test@gmail.com',
+    })
+    .then(r => console.log(r));
   // .then(() => api.comments.getPostById(23).then(r => console.log(r)));
 
   // const [posts, setPosts] = React.useState<IPostsResponse | null>(null);
