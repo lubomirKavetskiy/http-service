@@ -5,32 +5,33 @@ export abstract class MainAPI extends HttpClient {
     super(baseURL, authToken);
   }
 
-  public get<T>(path: string, params?: object, config?: object): Promise<T> {
+  //don't use here such access modifiers as 'public' because it's by default, e.g. public get
+  get<T>(path: string, params?: object, config?: object): Promise<T> {
     return this.instance.get(`${this.baseURL}${path}`, {
       params,
       ...config,
     });
   }
 
-  public post<T>(path: string, body: object, config?: object): Promise<T> {
+  post<T>(path: string, body: object, config?: object): Promise<T> {
     return this.instance.post(`${this.baseURL}${path}`, body, {
       ...config,
     });
   }
 
-  public put<T>(path: string, body: object, config?: object): Promise<T> {
+  put<T>(path: string, body: object, config?: object): Promise<T> {
     return this.instance.put(`${this.baseURL}${path}`, body, {
       ...config,
     });
   }
 
-  public patch<T>(path: string, body: object, config?: object): Promise<T> {
+  patch<T>(path: string, body: object, config?: object): Promise<T> {
     return this.instance.patch(`${this.baseURL}${path}`, body, {
       ...config,
     });
   }
 
-  public delete<T>(path: string, config?: object): Promise<T> {
+  delete<T>(path: string, config?: object): Promise<T> {
     return this.instance.patch(`${this.baseURL}${path}`, {
       ...config,
     });
