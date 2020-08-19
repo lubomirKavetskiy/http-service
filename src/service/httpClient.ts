@@ -12,33 +12,34 @@ export abstract class HttpClient {
       baseURL,
     });
 
-    this._initializeRequestInterceptor();
-    this._initializeResponseInterceptor();
+    this.#initializeRequestInterceptor();
+    this.#initializeResponseInterceptor();
   }
 
   // add request interceptor
-  private _initializeRequestInterceptor = () => {
+  //it's private method, used '#methodOrPropertyTitle' instead of private 'methodOrPropertyTitle'
+  #initializeRequestInterceptor = () => {
     this.instance.interceptors.request.use(
-      this._handleRequest,
-      this._handleError
+      this.#handleRequest,
+      this.#handleError
     );
   };
 
   // add response interceptor
-  private _initializeResponseInterceptor = () => {
+  #initializeResponseInterceptor = () => {
     this.instance.interceptors.response.use(
-      this._handleResponse,
-      this._handleError
+      this.#handleResponse,
+      this.#handleError
     );
   };
 
-  private _handleRequest = (config: AxiosRequestConfig) => {
+  #handleRequest = (config: AxiosRequestConfig) => {
     config.headers['X-Token'] = `Bearer ${this.authToken}`;
 
     return config;
   };
 
-  private _handleResponse = <T>({data}: AxiosResponse<T>) => data;
+  #handleResponse = <T>({data}: AxiosResponse<T>) => data;
 
-  protected _handleError = (error: any) => Promise.reject(error);
+  #handleError = (error: any) => Promise.reject(error);
 }
