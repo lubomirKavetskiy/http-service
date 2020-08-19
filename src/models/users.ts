@@ -29,7 +29,13 @@ export interface IUserResp {
   };
 }
 
-export interface IUsersCollectResp extends Array<IUserResp> {}
+export interface IUser extends Partial<IUserResp> {}
+
+// TCreateUserBody can be replaced with interface ICreateUserBody extends Partial<Omit<IUserResp, 'id'>> {}
+export type TCreateUserBody = {
+  [key in keyof Omit<IUserResp, 'id'>]?: IUserResp[key];
+};
+export interface IUsersCollectResp extends Array<Partial<IUserResp>> {}
 
 // export interface ICreateCommentBody extends Omit<ICommentResp, 'id'> {}
 

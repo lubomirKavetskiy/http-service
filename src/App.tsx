@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {api} from 'service/API';
 
 // import {api} from 'service/API';
 // import {api} from 'useHook';
@@ -8,28 +9,28 @@ import {TestComponent} from './components/TestComponent';
 export default function App() {
   const [isHandleFetch, setHandleFetch] = React.useState<boolean>(false);
   const [showComponent, setShowComponent] = React.useState<boolean>(true);
-  var url = new URL('https://example.com?foo=1&bar=2');
-  var params = new URLSearchParams(url.search);
+  // var url = new URL('https://example.com?foo=1&bar=2');
+  // var params = new URLSearchParams(url.search);
 
   // Pass in a string literal
-  var params2 = new URLSearchParams('foo=1&bar=2');
-  var params2a = new URLSearchParams('?foo=1&bar=2');
+  // var params2 = new URLSearchParams('foo=1&bar=2');
+  // var params2a = new URLSearchParams('?foo=1&bar=2');
 
-  // Pass in a sequence of pairs
-  var params3 = new URLSearchParams([
-    ['foo', '1'],
-    ['bar', '2'],
-  ]);
+  // // Pass in a sequence of pairs
+  // var params3 = new URLSearchParams([
+  //   ['foo', '1'],
+  //   ['bar', '2'],
+  // ]);
 
   // Pass in a record
-  var params4 = new URLSearchParams({foo: '1', bar: '2'});
-  console.log({
-    params: params.get('foo'),
-    params2,
-    params2a,
-    params3,
-    params4,
-  });
+  // var params4 = new URLSearchParams({foo: '1', bar: '2'});
+  // console.log({
+  //   params: params.get('foo'),
+  //   params2,
+  //   params2a,
+  //   params3,
+  //   params4,
+  // });
 
   /**
    * Encode an object as url query string parameters
@@ -38,38 +39,40 @@ export default function App() {
    * - example output — output "?key=value&alpha=beta"
    * - returns empty string when given an empty object
    */
-  function encodeQueryString(params: any) {
-    const keys = Object.keys(params);
-    return keys.length
-      ? '?' +
-          keys
-            .map(
-              key =>
-                encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
-            )
-            .join('&')
-      : '';
-  }
-  var params55 = new URLSearchParams([
-    ['foo cv', '1'],
-    ['bar', '2'],
-  ]).toString();
-  var params56 = new URLSearchParams({'key hhj': '[11, 22, 33]'}).toString();
+  // function encodeQueryString(params: any) {
+  //   const keys = Object.keys(params);
+  //   return keys.length
+  //     ? '?' +
+  //         keys
+  //           .map(
+  //             key =>
+  //               encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+  //           )
+  //           .join('&')
+  //     : '';
+  // }
+  // var params55 = new URLSearchParams([
+  //
 
-  console.log(params55, params56);
+  //   ['bar', '2'],
+  // ]).toString();
+  // var params56 = new URLSearchParams({'key hhj': '[11, 22, 33]'}).toString();
 
-  console.log(encodeQueryString({'foo cv': '1', bar: '2'}));
+  // console.log(params55, params56);
 
-  console.log(decodeURIComponent(encodeQueryString({'key hhj': [1, 2, 3]})));
-  console.log(
-    decodeURIComponent(encodeQueryString({key: [1, 2, 3]})).toString()
-  );
+  // console.log(encodeQueryString({'foo cv': '1', bar: '2'}));
 
-  const usrl = new URL('https://github.com/github/fetch');
-  usrl.search = new URLSearchParams({'key hhj': '[11, 22, 33]'}).toString();
-  console.log(usrl.toString());
+  // console.log(decodeURIComponent(encodeQueryString({'key hhj': [1, 2, 3]})));
+  // console.log(
+  //   decodeURIComponent(encodeQueryString({key: [1, 2, 3]})).toString()
+  // );
+
+  // const usrl = new URL('https://github.com/github/fetch');
+  // usrl.search = new URLSearchParams({'key hhj': '[11, 22, 33]'}).toString();
+  // console.log(usrl.toString());
 
   // https://github.com/github/fetch/issues/256
+
   return (
     <>
       <button

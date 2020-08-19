@@ -18,6 +18,8 @@ export type TPostsCollectResp = TPostResp[];
 
 export type TCreatePostBody = Omit<TPostResp, 'id'>;
 
+//@TODO for why this here '& {}' ?
 export type TEntireUpdPostBody = TCreatePostBody & {};
 
+//@TODO for why this here '& {}' ?
 export type TPartialyUpdPostBoby = Partial<TCreatePostBody> & {};

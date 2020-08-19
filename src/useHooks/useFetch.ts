@@ -1,6 +1,8 @@
+import {setSyntheticTrailingComments} from 'typescript';
+
 enum EFetchMethods {
   get = 'GET',
-  // post = 'POST',
+  post = 'POST',
   // put = 'PUT',
   // patch = 'PATCH',
   // delete = 'DELETE',
@@ -21,8 +23,8 @@ export const useFetch = (baseURL: string, token?: string) =>
       method: EFetchMethods,
       path: string,
       controller?: AbortController,
-      headers: object = defaultHeader,
-      body: object | null = null
+      body: object | null = null,
+      headers: object = defaultHeader
     ): Promise<T> => {
       const options: any = {method, headers};
 
@@ -43,16 +45,13 @@ export const useFetch = (baseURL: string, token?: string) =>
       }
     };
 
-    // GET //
-    // const get = <T>(
-    //   id: string | number,
-    //   endpoint: (id: string | number) => string,
-    //   controller: AbortController
-    // ) => customFetch<T>(EFetchMethods.get, endpoint(id), controller);
     const get = <T>(path: string, controller: AbortController) =>
       customFetch<T>(EFetchMethods.get, path, controller);
 
-    return {get};
+    const post = <T>(path: string, body: object, controller: AbortController) =>
+      customFetch<T>(EFetchMethods.post, path, controller, body);
+    const foo = <T>(comp: T): T => comp;
+    return {get, post};
   };
 
 // type obj = {

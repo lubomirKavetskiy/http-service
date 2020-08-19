@@ -7,7 +7,7 @@ type TProps = {handleFetch: boolean};
 
 export const TestComponent: React.FC<TProps> = ({handleFetch}) => {
   const {controller} = useAbortController();
-  const [data, setData] = React.useState<IUsersCollectResp | null>(null);
+  const [data, setData] = React.useState<IUsersCollectResp | null | any>(null);
 
   React.useEffect(() => {
     handleFetch &&
@@ -21,8 +21,14 @@ export const TestComponent: React.FC<TProps> = ({handleFetch}) => {
         .catch(er => console.log(er));
   }, [handleFetch]);
 
-  console.log(data?.[0].company);
+  React.useEffect(() => {
+    api.users
+      .createUser({name: undefined}, controller)
+      .then(res => setData(res.phone));
+  }, []);
+
+  console.log(data);
 
   // return <div>TestComponen{data}</div>;
-  return <div>TestComponen</div>;
+  return <div>TestComponen{data}</div>;
 };

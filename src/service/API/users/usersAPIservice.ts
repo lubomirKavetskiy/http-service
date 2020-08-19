@@ -1,16 +1,11 @@
 import {useFetch} from 'useHooks';
-import {TUserId, IUserResp, IUsersCollectResp} from 'models';
+import {TUserId, IUserResp, IUsersCollectResp, TCreateUserBody} from 'models';
 import {usersEndpoints} from './endpoints';
 
 export const UsersAPIservice = (baseURL: string, token?: string) => {
-  const {get} = useFetch(baseURL, token);
+  const {get, post} = useFetch(baseURL, token);
 
   return {
-    // getUserById(id: number | string, controller: AbortController) {
-
-    //   return get<TUserResp>(id, usersEndpoints.getUserById, controller);
-    // },
-
     // get unique user by its id
     //GET 	/users/id
     getUserById(id: TUserId, controller: AbortController) {
@@ -49,9 +44,11 @@ export const UsersAPIservice = (baseURL: string, token?: string) => {
       return get<IUsersCollectResp>(path, controller);
     },
 
-    // createUsert(body: ICreateCommentBody) {
-    //   return this.post<any>(commentsEndpoints.root, body);
-    // },
+    // create a new user
+    // POST
+    createUser(body: TCreateUserBody, controller: AbortController) {
+      return post<Partial<IUserResp>>(usersEndpoints.root, body, controller);
+    },
   };
 };
 
