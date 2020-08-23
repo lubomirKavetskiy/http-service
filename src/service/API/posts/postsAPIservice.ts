@@ -1,16 +1,16 @@
 import {MainAPI} from 'service';
 import {
-  TPostId,
-  TPostParams,
-  TPostResp,
-  TPostsCollectResp,
-  TCreatePostBody,
-  TEntireUpdPostBody,
-  TPartialyUpdPostBoby,
+  PostId,
+  PostParams,
+  PostResp,
+  PostsCollectResp,
+  CreatePostBody,
+  EntireUpdPostBody,
+  PartialyUpdPostBoby,
 } from 'models';
 import {postsEndpoints} from './endpoints';
 
-type TBody = Omit<TPostResp, 'id'>;
+type TBody = Omit<PostResp, 'id'>;
 
 export class PostsAPIservice extends MainAPI {
   constructor(public baseURL: string, public authToken?: string) {
@@ -19,30 +19,30 @@ export class PostsAPIservice extends MainAPI {
 
   // get unique post by its id
   //GET 	/posts/id
-  getPostById(id: TPostId) {
+  getPostById(id: PostId) {
     //use this without super ???
-    return this.get<TPostResp>(postsEndpoints.getPostById(id));
+    return this.get<PostResp>(postsEndpoints.getPostById(id));
   }
 
   // get all or by such param as id or userId
   //GET  /posts || /posts?id=1 || /posts?userId=1
-  getPosts(params?: Partial<TPostParams>) {
-    return this.get<TPostsCollectResp>(postsEndpoints.root, params);
+  getPosts(params?: Partial<PostParams>) {
+    return this.get<PostsCollectResp>(postsEndpoints.root, params);
   }
 
-  createPost(body: TCreatePostBody) {
-    return this.post<TPostResp>(postsEndpoints.root, body);
+  createPost(body: CreatePostBody) {
+    return this.post<PostResp>(postsEndpoints.root, body);
   }
 
-  updatePostEntire(id: TPostId, body: TEntireUpdPostBody) {
-    return this.put<TPostResp>(postsEndpoints.getPostById(id), body);
+  updatePostEntire(id: PostId, body: EntireUpdPostBody) {
+    return this.put<PostResp>(postsEndpoints.getPostById(id), body);
   }
 
-  updatePostPartialy(id: TPostId, body: TPartialyUpdPostBoby) {
-    return this.patch<TPostResp>(postsEndpoints.getPostById(id), body);
+  updatePostPartialy(id: PostId, body: PartialyUpdPostBoby) {
+    return this.patch<PostResp>(postsEndpoints.getPostById(id), body);
   }
 
-  deletePostById(id: TPostId) {
-    return this.delete<TPostResp>(postsEndpoints.getPostById(id));
+  deletePostById(id: PostId) {
+    return this.delete<PostResp>(postsEndpoints.getPostById(id));
   }
 }

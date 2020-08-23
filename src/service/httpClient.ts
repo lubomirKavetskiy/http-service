@@ -5,6 +5,7 @@ import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 // }
 
 export abstract class HttpClient {
+  //assigned it like a protected for accessible it in inherited classes as well
   protected readonly instance: AxiosInstance;
 
   constructor(public baseURL: string, public authToken?: string) {

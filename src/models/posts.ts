@@ -1,23 +1,23 @@
-type TUserId = number | string;
+type UserId = number | string;
 
-export type TPostId = number | string;
+export type PostId = number | string;
 
-export type TPostParams = {
-  id: TPostId;
-  userId: TUserId;
+export type PostParams = {
+  id: PostId;
+  userId: UserId;
 };
 
-export type TPostResp = {
-  id: Omit<TPostId, string>;
-  userId: Exclude<TUserId, string>;
+export type PostResp = {
+  id: Omit<PostId, string>;
+  userId: Exclude<UserId, string>;
   title: string;
   body: string;
 };
 
-export type TPostsCollectResp = TPostResp[];
+export type PostsCollectResp = PostResp[];
 
-export type TCreatePostBody = Omit<TPostResp, 'id'>;
+export type CreatePostBody = Omit<PostResp, 'id'>;
 
-export type TEntireUpdPostBody = TCreatePostBody & {};
+export type EntireUpdPostBody = CreatePostBody;
 
-export type TPartialyUpdPostBoby = Partial<TCreatePostBody> & {};
+export type PartialyUpdPostBoby = Partial<CreatePostBody>;

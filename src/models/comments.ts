@@ -1,13 +1,13 @@
-type TPostId = number | string;
+type PostId = number | string;
 
-export type TCommentId = number | string;
+export type CommentId = number | string;
 
-export interface ICommentParams {
-  id?: TCommentId;
-  postId?: TPostId;
+export interface CommentParams {
+  id?: CommentId;
+  postId?: PostId;
 }
 
-export interface ICommentResp {
+export interface CommentResp {
   id: number;
   postId: number;
   name: string;
@@ -15,10 +15,10 @@ export interface ICommentResp {
   body: string;
 }
 
-export interface ICommentsCollectResp extends Array<ICommentResp> {}
+export interface CommentsCollectResp extends Array<CommentResp> {}
 
-export interface ICreateCommentBody extends Omit<ICommentResp, 'id'> {}
+export interface CreateCommentBody extends Omit<CommentResp, 'id'> {}
 
-export interface IEntireUpdCommentBoby extends ICreateCommentBody {}
+export interface EntireUpdCommentBoby extends CreateCommentBody {}
 //@TODO atleast one key of object
-export interface IPartialyUpdCommentBoby extends Partial<ICreateCommentBody> {}
+export interface PartialyUpdCommentBoby extends Partial<CreateCommentBody> {}
