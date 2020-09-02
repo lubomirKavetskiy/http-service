@@ -1,11 +1,11 @@
-export type TUserId = number | string;
+export type UserId = number | string;
 
 // export interface ICommentParams {
 //   id?: TCommentId;
 //   postId?: TPostId;
 // }
 
-export interface IUserResp {
+export interface UserResp {
   id: number;
   name: string;
   username: string;
@@ -29,13 +29,13 @@ export interface IUserResp {
   };
 }
 
-export interface IUser extends Partial<IUserResp> {}
+export interface User extends Partial<UserResp> {}
 
 // TCreateUserBody can be replaced with interface ICreateUserBody extends Partial<Omit<IUserResp, 'id'>> {}
-export type TCreateUserBody = {
-  [key in keyof Omit<IUserResp, 'id'>]?: IUserResp[key];
+export type CreateUserBody = {
+  [key in keyof Omit<UserResp, 'id'>]?: UserResp[key];
 };
-export interface IUsersCollectResp extends Array<Partial<IUserResp>> {}
+export interface UsersCollectResp extends Array<Partial<UserResp>> {}
 
 // export interface ICreateCommentBody extends Omit<ICommentResp, 'id'> {}
 

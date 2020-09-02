@@ -1,5 +1,3 @@
-import {setSyntheticTrailingComments} from 'typescript';
-
 enum EFetchMethods {
   get = 'GET',
   post = 'POST',
@@ -50,7 +48,7 @@ export const useFetch = (baseURL: string, token?: string) =>
 
     const post = <T>(path: string, body: object, controller: AbortController) =>
       customFetch<T>(EFetchMethods.post, path, controller, body);
-    const foo = <T>(comp: T): T => comp;
+
     return {get, post};
   };
 

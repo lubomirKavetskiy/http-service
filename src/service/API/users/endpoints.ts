@@ -1,10 +1,10 @@
-import {TUserId} from 'models';
+import {UserId} from 'models';
 
 const root = '/users';
 
 export const usersEndpoints = {
   root,
-  getUserById(id: TUserId): string {
+  getUserById(id: UserId): string {
     return `${root}/${id}`;
   },
 };

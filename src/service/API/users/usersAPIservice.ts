@@ -1,53 +1,51 @@
 import {useFetch} from 'useHooks';
-import {TUserId, IUserResp, IUsersCollectResp, TCreateUserBody} from 'models';
+import {UserId, UserResp, UsersCollectResp, CreateUserBody} from 'models';
+import {Params, stringifyObjectSearchParams} from 'service/queryString';
 import {usersEndpoints} from './endpoints';
 
 export const UsersAPIservice = (baseURL: string, token?: string) => {
   const {get, post} = useFetch(baseURL, token);
 
   return {
-    // get unique user by its id
-    //GET 	/users/id
-    getUserById(id: TUserId, controller: AbortController) {
+    //* get unique user by its id
+    //* GET 	/users/id
+    getUserById(id: UserId, controller: AbortController) {
       const path = usersEndpoints.getUserById(id);
 
-      return get<IUserResp>(path, controller);
+      return get<UserResp>(path, controller);
     },
 
-    // get all or by such param as id or postId
-    //GET  /users || /users?id=1 || /users?name=test ...
+    //* get all or by such param as id or postId
+    //* GET  /users || /users?id=1 ||
+    //* /users?name=test ... ||
+    //* {id: 1, arr: ['a', 'b', 'c'],
+    //* address: {
+    //*   geo: {
+    //*     lat: '-31.8129',
+    //*     lng: '62.5342',
+    //*  },
+    //* }}
     getUsersByParams(
       controller: AbortController,
-      searchParams?: undefined | string | object
+      searchParams?: string | Params
     ) {
       let path = usersEndpoints.root;
 
       if (searchParams) {
-        if (
-          typeof searchParams === 'object' &&
-          Object.keys(searchParams).length
-        ) {
-          // e.g. {searchParamA: '100', searchParamB: '[200, 300, 400]'} ||
-          // [['searchParamA', '100'], ['searchParamB', '200']]
-          const searchParamsToString = new URLSearchParams(
-            searchParams as {[x: string]: string}
-          ).toString();
-
-          path = `${path}?${searchParamsToString}`;
-        }
-        if (typeof searchParams === 'string') {
-          // e.g. "?searchParamA=100&searchParamB=200"
-          path = `${path}${searchParams}`;
-        }
+        path = `${path}?${
+          typeof searchParams === 'string'
+            ? path
+            : stringifyObjectSearchParams(searchParams)
+        }`;
       }
 
-      return get<IUsersCollectResp>(path, controller);
+      return get<UsersCollectResp>(path, controller);
     },
 
-    // create a new user
-    // POST
-    createUser(body: TCreateUserBody, controller: AbortController) {
-      return post<Partial<IUserResp>>(usersEndpoints.root, body, controller);
+    //* create a new user
+    //* POST
+    createUser(body: CreateUserBody, controller: AbortController) {
+      return post<Partial<UserResp>>(usersEndpoints.root, body, controller);
     },
   };
 };

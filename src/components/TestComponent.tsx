@@ -2,17 +2,26 @@ import React from 'react';
 
 import {useAbortController} from 'useHooks/useAbortController';
 import {api} from 'service/API';
-import {IUsersCollectResp} from 'models';
+import {UsersCollectResp} from 'models';
 type TProps = {handleFetch: boolean};
 
 export const TestComponent: React.FC<TProps> = ({handleFetch}) => {
   const {controller} = useAbortController();
-  const [data, setData] = React.useState<IUsersCollectResp | null | any>(null);
+  const [data, setData] = React.useState<UsersCollectResp | null | any>(null);
 
   React.useEffect(() => {
     handleFetch &&
       api.users
-        .getUsersByParams(controller)
+        .getUsersByParams(controller, {
+          id: null,
+          // arr: ['a', 'b', 'c'],
+          // address: {
+          //   geo: {
+          //     lat: '-31.8129',
+          //     lng: '62.5342',
+          //   },
+          // },
+        })
         .then(res => {
           console.log({res});
           setData(res);
@@ -29,6 +38,5 @@ export const TestComponent: React.FC<TProps> = ({handleFetch}) => {
 
   console.log(data);
 
-  // return <div>TestComponen{data}</div>;
-  return <div>TestComponen{data}</div>;
+  return <div>TestComponen</div>;
 };
