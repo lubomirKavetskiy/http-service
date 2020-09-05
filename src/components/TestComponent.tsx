@@ -2,26 +2,19 @@ import React from 'react';
 
 import {useAbortController} from 'useHooks/useAbortController';
 import {api} from 'service/API';
-import {UsersCollectResp} from 'models';
-type TProps = {handleFetch: boolean};
+import {User} from 'models';
+import {SSL_OP_NO_TLSv1_1} from 'constants';
+type Props = {handleFetch: boolean};
 
-export const TestComponent: React.FC<TProps> = ({handleFetch}) => {
+export const TestComponent: React.FC<Props> = ({handleFetch}) => {
   const {controller} = useAbortController();
-  const [data, setData] = React.useState<UsersCollectResp | null | any>(null);
+  const [data, setData] = React.useState<Partial<User> | null | any>(null);
 
   React.useEffect(() => {
     handleFetch &&
       api.users
-        .getUsersByParams(controller, {
-          id: null,
-          // arr: ['a', 'b', 'c'],
-          // address: {
-          //   geo: {
-          //     lat: '-31.8129',
-          //     lng: '62.5342',
-          //   },
-          // },
-        })
+        .deleteUser(2, controller)
+
         .then(res => {
           console.log({res});
           setData(res);
@@ -31,9 +24,7 @@ export const TestComponent: React.FC<TProps> = ({handleFetch}) => {
   }, [handleFetch]);
 
   React.useEffect(() => {
-    api.users
-      .createUser({name: undefined}, controller)
-      .then(res => setData(res.phone));
+    api.users.getUsersByParams(controller).then(res => setData(res));
   }, []);
 
   console.log(data);

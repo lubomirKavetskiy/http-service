@@ -1,27 +1,16 @@
-export type Params = {
-  [x: string]:
-    | undefined
-    | null
-    | number
-    | string
-    | boolean
-    | object
-    | (string | number)[];
-};
-
-export const stringifyObjectSearchParams = (obj: Params): string => {
+export const stringifyObjectSearchParams = <T>(obj: T): string => {
   let result = new URLSearchParams('');
   let concatNestedObjParams = '';
 
-  const setResult = (obj: Params) => {
+  const setResult = (obj: T) => {
     for (const key in obj) {
-      const value = obj[key];
+      let value = obj[key];
 
       if (
         typeof value !== 'undefined' &&
-        //because {key: ()=>} is an object TS
+        //* because {key: ()=>} is an object TS
         typeof value !== 'function' &&
-        //because typeof null === 'object'
+        //* because typeof null === 'object'
         value !== null
       ) {
         if (typeof value === 'object') {
@@ -35,12 +24,12 @@ export const stringifyObjectSearchParams = (obj: Params): string => {
             concatNestedObjParams = concatNestedObjParams
               ? `${concatNestedObjParams}.${key}`
               : key;
-            setResult(value as Params);
+            setResult((value as unknown) as T);
           }
         } else {
           result.set(
             concatNestedObjParams ? `${concatNestedObjParams}.${key}` : key,
-            value.toString()
+            (value as unknown) as string
           );
           concatNestedObjParams = '';
         }

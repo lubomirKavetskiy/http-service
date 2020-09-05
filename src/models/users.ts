@@ -1,15 +1,10 @@
 export type UserId = number | string;
 
-// export interface ICommentParams {
-//   id?: TCommentId;
-//   postId?: TPostId;
-// }
-
-export interface UserResp {
-  id: number;
-  name: string;
+export interface User {
+  id: UserId;
   username: string;
   email: string;
+  name: string;
   address: {
     street: string;
     suite: string;
@@ -29,13 +24,22 @@ export interface UserResp {
   };
 }
 
-export interface User extends Partial<UserResp> {}
-
-// TCreateUserBody can be replaced with interface ICreateUserBody extends Partial<Omit<IUserResp, 'id'>> {}
-export type CreateUserBody = {
-  [key in keyof Omit<UserResp, 'id'>]?: UserResp[key];
+export type UserResp = RecursivePartial<User>;
+export interface UsersCollectResp extends Array<RecursivePartial<User>> {}
+export interface CreateUserBody extends Pick<User, 'username' | 'email'> {}
+export interface CreatedUserResp extends CreateUserBody {
+  id: UserId;
+}
+export interface UpdUserEntireBody extends Omit<User, 'id'> {}
+export interface UpdUserPartialyBody extends Omit<UserResp, 'id'> {}
+type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
 };
-export interface UsersCollectResp extends Array<Partial<UserResp>> {}
+
+// export interface CreateUserBody extends Omit<User, 'id'> {}
+// export type CreateUserBody = {
+//   [key in keyof Omit<User, 'id'>]?: User[key];
+// };
 
 // export interface ICreateCommentBody extends Omit<ICommentResp, 'id'> {}
 

@@ -1,10 +1,19 @@
 import {useFetch} from 'useHooks';
-import {UserId, UserResp, UsersCollectResp, CreateUserBody} from 'models';
-import {Params, stringifyObjectSearchParams} from 'service/queryString';
+import {
+  User,
+  UserId,
+  UserResp,
+  UsersCollectResp,
+  CreateUserBody,
+  CreatedUserResp,
+  UpdUserEntireBody,
+  UpdUserPartialyBody,
+} from 'models';
+import {stringifyObjectSearchParams} from 'service/queryString';
 import {usersEndpoints} from './endpoints';
 
 export const UsersAPIservice = (baseURL: string, token?: string) => {
-  const {get, post} = useFetch(baseURL, token);
+  const {get, post, put, patch, del} = useFetch(baseURL, token);
 
   return {
     //* get unique user by its id
@@ -27,7 +36,7 @@ export const UsersAPIservice = (baseURL: string, token?: string) => {
     //* }}
     getUsersByParams(
       controller: AbortController,
-      searchParams?: string | Params
+      searchParams?: string | UserResp
     ) {
       let path = usersEndpoints.root;
 
@@ -35,51 +44,43 @@ export const UsersAPIservice = (baseURL: string, token?: string) => {
         path = `${path}?${
           typeof searchParams === 'string'
             ? path
-            : stringifyObjectSearchParams(searchParams)
+            : stringifyObjectSearchParams<UserResp>(searchParams)
         }`;
       }
 
       return get<UsersCollectResp>(path, controller);
     },
 
-    //* create a new user
+    //* create a new user by username and email
     //* POST
     createUser(body: CreateUserBody, controller: AbortController) {
-      return post<Partial<UserResp>>(usersEndpoints.root, body, controller);
+      return post<CreatedUserResp>(usersEndpoints.root, body, controller);
+    },
+
+    //* update user entire
+    //* PUT
+    updateUserEntire(
+      id: UserId,
+      body: UpdUserEntireBody,
+      controller: AbortController
+    ) {
+      return put<User>(usersEndpoints.getUserById(id), body, controller);
+    },
+
+    //* update user partialy
+    //* PATCH
+    updateUserPartialy(
+      id: UserId,
+      body: UpdUserPartialyBody,
+      controller: AbortController
+    ) {
+      return patch<UserResp>(usersEndpoints.getUserById(id), body, controller);
+    },
+
+    //* delete user
+    //* DELETE
+    deleteUser(id: UserId, controller: AbortController) {
+      return del<object>(usersEndpoints.getUserById(id), controller);
     },
   };
 };
-
-// export class CommentsAPIservice extends MainAPI {
-//   constructor(public baseURL: string, public authToken?: string) {
-//     super(baseURL, authToken);
-//   }
-
-//   // get unique post by its id
-//   //GET 	/comments/id
-//   getCommentById(id: TCommentId) {
-//     return this.get<ICommentResp>(commentsEndpoints.getCommentById(id));
-//   }
-
-//   // get all or by such param as id or postId
-//   //GET  /comments || /comments?id=1 || /comments?postId=1
-//   getComments(params?: ICommentParams) {
-//     return super.get<ICommentsCollectResp>(commentsEndpoints.root, params);
-//   }
-
-//   createComment(body: ICreateCommentBody) {
-//     return this.post<any>(commentsEndpoints.root, body);
-//   }
-
-//   updateCommentEntire(id: TCommentId, body: IEntireUpdCommentBoby) {
-//     return this.put<ICommentResp>(commentsEndpoints.getCommentById(id), body);
-//   }
-
-//   updateCommentPartialy(id: TCommentId, body: IPartialyUpdCommentBoby) {
-//     return this.patch<ICommentResp>(commentsEndpoints.getCommentById(id), body);
-//   }
-
-//   deleteCommentById(id: TCommentId) {
-//     return this.delete<ICommentResp>(commentsEndpoints.getCommentById(id));
-//   }
-// }
