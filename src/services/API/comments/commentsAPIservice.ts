@@ -1,4 +1,4 @@
-import {MainAPI} from 'service';
+import {MainAPI} from 'services';
 import {
   CommentId,
   CommentParams,
@@ -13,8 +13,8 @@ import {commentsEndpoints} from './endpoints';
 export class CommentsAPIservice extends MainAPI {
   //it's not necessary to assign the constructor but
   //if we want to add this.newProp = newProp we will need to assign this constructor
-  constructor(public baseURL: string, public authToken?: string) {
-    super(baseURL, authToken);
+  constructor(public baseURL: string) {
+    super(baseURL);
   }
 
   // get unique post by its id
@@ -42,6 +42,6 @@ export class CommentsAPIservice extends MainAPI {
   }
 
   deleteCommentById(id: CommentId) {
-    return this.delete<CommentResp>(commentsEndpoints.getCommentById(id));
+    return this.delete<object>(commentsEndpoints.getCommentById(id));
   }
 }

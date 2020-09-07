@@ -1,14 +1,15 @@
-import {HttpClient} from './httpClient';
+import { HttpClient } from './httpClient';
 
 export abstract class MainAPI extends HttpClient {
   //it's not necessary to assign the constructor but
   //if we want to add this.newProp = newProp we will need to assign this constructor
-  constructor(public baseURL: string, public authToken?: string) {
-    super(baseURL, authToken);
+  constructor(public baseURL: string) {
+    super(baseURL);
   }
 
   //don't use here such access modifiers as 'public' because it's by default, e.g. public get
   get<T>(path: string, params?: object, config?: object): Promise<T> {
+    console.log(config);
     return this.instance.get(`${this.baseURL}${path}`, {
       params,
       ...config,

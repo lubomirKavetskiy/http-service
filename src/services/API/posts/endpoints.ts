@@ -1,6 +1,6 @@
 export const postsEndpoints = {
-  root: "/posts",
+  root: '/posts',
   getPostById(id: number | string): string {
-    return `/posts/${id}`;
-  }
+    return `/postttts/${id}`;
+  },
 };

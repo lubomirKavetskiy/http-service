@@ -1,4 +1,4 @@
-import {MainAPI} from 'service';
+import {MainAPI} from 'services';
 import {
   PostId,
   PostParams,
@@ -10,24 +10,22 @@ import {
 } from 'models';
 import {postsEndpoints} from './endpoints';
 
-type TBody = Omit<PostResp, 'id'>;
-
 export class PostsAPIservice extends MainAPI {
-    //it's not necessary to assign the constructor but
-  //if we want to add this.newProp = newProp we will need to assign this constructor
-  constructor(public baseURL: string, public authToken?: string) {
-    super(baseURL, authToken);
+  //* it's not necessary to assign the constructor but
+  //* if we want to add this.newProp = newProp we will need to assign this constructor
+  constructor(public baseURL: string) {
+    super(baseURL);
   }
 
-  // get unique post by its id
-  //GET 	/posts/id
+  //* get unique post by its id
+  //* GET 	/posts/id
   getPostById(id: PostId) {
-    //use this without super ???
+    //* use this without super ???
     return this.get<PostResp>(postsEndpoints.getPostById(id));
   }
 
-  // get all or by such param as id or userId
-  //GET  /posts || /posts?id=1 || /posts?userId=1
+  //* get all or by such param as id or userId
+  //* GET  /posts || /posts?id=1 || /posts?userId=1
   getPosts(params?: Partial<PostParams>) {
     return this.get<PostsCollectResp>(postsEndpoints.root, params);
   }
@@ -45,6 +43,6 @@ export class PostsAPIservice extends MainAPI {
   }
 
   deletePostById(id: PostId) {
-    return this.delete<PostResp>(postsEndpoints.getPostById(id));
+    return this.delete<object>(postsEndpoints.getPostById(id));
   }
 }
