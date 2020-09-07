@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import {api} from 'service/API';
 
 // import {api} from 'service/API';
 // import {api} from 'useHook';
@@ -9,6 +8,7 @@ import {TestComponent} from './components/TestComponent';
 export default function App() {
   const [isHandleFetch, setHandleFetch] = React.useState<boolean>(false);
   const [showComponent, setShowComponent] = React.useState<boolean>(true);
+
   // var url = new URL('https://example.com?foo=1&bar=2');
   // var params = new URLSearchParams(url.search);
 

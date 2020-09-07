@@ -1,9 +1,9 @@
 import React from 'react';
 
 import {useAbortController} from 'useHooks/useAbortController';
-import {api} from 'service/API';
+import {api} from 'services/API';
 import {User} from 'models';
-import {SSL_OP_NO_TLSv1_1} from 'constants';
+
 type Props = {handleFetch: boolean};
 
 export const TestComponent: React.FC<Props> = ({handleFetch}) => {
@@ -23,9 +23,9 @@ export const TestComponent: React.FC<Props> = ({handleFetch}) => {
         .catch(er => console.log(er));
   }, [handleFetch]);
 
-  React.useEffect(() => {
-    api.users.getUsersByParams(controller).then(res => setData(res));
-  }, []);
+  // React.useEffect(() => {
+  //   api.users.getUsersByParams(controller).then(res => setData(res));
+  // }, []);
 
   console.log(data);
 

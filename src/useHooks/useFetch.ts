@@ -1,3 +1,7 @@
+import React from 'react';
+import { getToken } from 'services';
+// import { useDidUpdEffect } from 'useHooks';
+
 enum FetchMethods {
   get = 'GET',
   post = 'POST',
@@ -6,33 +10,33 @@ enum FetchMethods {
   del = 'DELETE',
 }
 
-export const useFetch = (baseURL: string, token?: string) => {
+export const useFetch = (baseURL: string) => {
   // [key in keyof typeof FetchMethods]: ;
-
-  const defaultHeader = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    ...(token && {Authorization: `Bearer ${token}`}),
-  };
 
   const customFetch = async <T>(
     method: FetchMethods,
     path: string,
     controller?: AbortController,
     body: object | null = null,
-    headers: object = defaultHeader
+    headers?: object
   ): Promise<T> => {
-    const options: any = {method, headers};
+    const token = getToken() as string | undefined;
+    const defaultHeader = {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      ...(token && { Authorization: `Bearer ${token}` }),
+    };
+    const options: any = { method, headers: headers || defaultHeader };
 
     if (body) options.body = JSON.stringify(body);
     if (controller) options.signal = controller.signal;
 
     try {
       const response = await fetch(`${baseURL}${path}`, options);
-      console.log({response});
+      console.log({ response });
 
       const result = await response.json();
-      console.log({result});
+      console.log({ result });
 
       return result;
     } catch (err) {
@@ -56,5 +60,5 @@ export const useFetch = (baseURL: string, token?: string) => {
   const del = <T>(path: string, controller: AbortController) =>
     customFetch<T>(FetchMethods.del, path, controller);
 
-  return {get, post, put, patch, del};
+  return { get, post, put, patch, del };
 };

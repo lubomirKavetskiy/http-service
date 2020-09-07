@@ -1,4 +1,4 @@
-import {useFetch} from 'useHooks';
+import { useFetch } from 'useHooks';
 import {
   User,
   UserId,
@@ -9,13 +9,15 @@ import {
   UpdUserEntireBody,
   UpdUserPartialyBody,
 } from 'models';
-import {stringifyObjectSearchParams} from 'service/queryString';
-import {usersEndpoints} from './endpoints';
+import { stringifyObjectSearchParams } from 'services/queryString';
+import { usersEndpoints } from './endpoints';
 
-export const UsersAPIservice = (baseURL: string, token?: string) => {
-  const {get, post, put, patch, del} = useFetch(baseURL, token);
+export const UsersAPIservice = (baseURL: string) => {
+  const { get, post, put, patch, del } = useFetch(baseURL);
 
   return {
+
+
     //* get unique user by its id
     //* GET 	/users/id
     getUserById(id: UserId, controller: AbortController) {
@@ -23,7 +25,6 @@ export const UsersAPIservice = (baseURL: string, token?: string) => {
 
       return get<UserResp>(path, controller);
     },
-
     //* get all or by such param as id or postId
     //* GET  /users || /users?id=1 ||
     //* /users?name=test ... ||
@@ -41,11 +42,10 @@ export const UsersAPIservice = (baseURL: string, token?: string) => {
       let path = usersEndpoints.root;
 
       if (searchParams) {
-        path = `${path}?${
-          typeof searchParams === 'string'
-            ? path
-            : stringifyObjectSearchParams<UserResp>(searchParams)
-        }`;
+        path = `${path}?${typeof searchParams === 'string'
+          ? path
+          : stringifyObjectSearchParams<UserResp>(searchParams)
+          }`;
       }
 
       return get<UsersCollectResp>(path, controller);
@@ -84,3 +84,5 @@ export const UsersAPIservice = (baseURL: string, token?: string) => {
     },
   };
 };
+
+
