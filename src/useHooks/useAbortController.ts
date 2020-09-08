@@ -1,14 +1,15 @@
 import React from 'react';
 
-export const useAbortController = () => {
+export const useAbortController = (): { controller: AbortController; } => {
   const controller: AbortController = new AbortController();
 
   React.useEffect(
     () => () => {
+      alert('abort');
       controller.abort();
     },
-    [controller]
+    []
   );
 
-  return {controller};
+  return { controller };
 };

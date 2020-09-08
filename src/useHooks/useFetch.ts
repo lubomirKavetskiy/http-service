@@ -1,6 +1,5 @@
 import React from 'react';
 import { getToken } from 'services';
-// import { useDidUpdEffect } from 'useHooks';
 
 enum FetchMethods {
   get = 'GET',
@@ -12,7 +11,6 @@ enum FetchMethods {
 
 export const useFetch = (baseURL: string) => {
   // [key in keyof typeof FetchMethods]: ;
-
   const customFetch = async <T>(
     method: FetchMethods,
     path: string,
