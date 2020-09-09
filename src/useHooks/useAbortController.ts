@@ -5,9 +5,9 @@ export const useAbortController = (): { controller: AbortController; } => {
 
   React.useEffect(
     () => () => {
-      alert('abort');
       controller.abort();
     },
+    // eslint-disable-next-line
     []
   );
 

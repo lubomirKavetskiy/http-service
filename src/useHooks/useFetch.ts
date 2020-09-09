@@ -12,7 +12,7 @@ export const useFetch = (baseURL: string) => {
   const customFetch = async <T>(
     method: FetchMethods,
     path: string,
-    { signal: controllerSignal }: AbortController,
+    signal: AbortSignal,
     body: object | null = null,
     headers?: object
   ): Promise<T> => {
@@ -25,7 +25,7 @@ export const useFetch = (baseURL: string) => {
     const options: any = { method, headers: headers || defaultHeader };
 
     if (body) options.body = JSON.stringify(body);
-    options.signal = controllerSignal;
+    options.signal = signal;
 
     try {
       const response = await fetch(`${baseURL}${path}`, options);
@@ -35,26 +35,33 @@ export const useFetch = (baseURL: string) => {
       console.log({ result });
 
       return result;
-    } catch (err) {
-      alert('catch');
-      throw new Error(err);
+    } catch (error) {
+      console.log({ error });
+      handleError(error);
+      throw new Error(error);
     }
   };
 
-  const get = <T>(path: string, controller: AbortController) =>
-    customFetch<T>(FetchMethods.get, path, controller);
+  const handleError = (error: Error): void => {
+    if (error.name === "AbortError") console.log('Request aborted');
 
-  const post = <T>(path: string, body: object, controller: AbortController) =>
-    customFetch<T>(FetchMethods.post, path, controller, body);
+    console.log(error);
+  };
 
-  const put = <T>(path: string, body: object, controller: AbortController) =>
-    customFetch<T>(FetchMethods.put, path, controller, body);
+  const get = <T>(path: string, signal: AbortSignal) =>
+    customFetch<T>(FetchMethods.get, path, signal);
 
-  const patch = <T>(path: string, body: object, controller: AbortController) =>
-    customFetch<T>(FetchMethods.put, path, controller, body);
+  const post = <T>(path: string, body: object, signal: AbortSignal) =>
+    customFetch<T>(FetchMethods.post, path, signal, body);
 
-  const del = <T>(path: string, controller: AbortController) =>
-    customFetch<T>(FetchMethods.del, path, controller);
+  const put = <T>(path: string, body: object, signal: AbortSignal) =>
+    customFetch<T>(FetchMethods.put, path, signal, body);
+
+  const patch = <T>(path: string, body: object, signal: AbortSignal) =>
+    customFetch<T>(FetchMethods.put, path, signal, body);
+
+  const del = <T>(path: string, signal: AbortSignal) =>
+    customFetch<T>(FetchMethods.del, path, signal);
 
   return { get, post, put, patch, del };
 };

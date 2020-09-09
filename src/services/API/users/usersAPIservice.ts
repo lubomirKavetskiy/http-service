@@ -20,10 +20,10 @@ export const UsersAPIservice = (baseURL: string) => {
 
     //* get unique user by its id
     //* GET 	/users/id
-    getUserById(id: UserId, controller: AbortController) {
+    getUserById(id: UserId, signal: AbortSignal) {
       const path = usersEndpoints.getUserById(id);
 
-      return get<UserResp>(path, controller);
+      return get<UserResp>(path, signal);
     },
     //* get all or by such param as id or postId
     //* GET  /users || /users?id=1 ||
@@ -36,7 +36,7 @@ export const UsersAPIservice = (baseURL: string) => {
     //*  },
     //* }}
     getUsersByParams(
-      controller: AbortController,
+      signal: AbortSignal,
       searchParams?: string | UserResp
     ) {
       let path = usersEndpoints.root;
@@ -48,13 +48,13 @@ export const UsersAPIservice = (baseURL: string) => {
           }`;
       }
 
-      return get<UsersCollectResp>(path, controller);
+      return get<UsersCollectResp>(path, signal);
     },
 
     //* create a new user by username and email
     //* POST
-    createUser(body: CreateUserBody, controller: AbortController) {
-      return post<CreatedUserResp>(usersEndpoints.root, body, controller);
+    createUser(body: CreateUserBody, signal: AbortSignal) {
+      return post<CreatedUserResp>(usersEndpoints.root, body, signal);
     },
 
     //* update user entire
@@ -62,9 +62,9 @@ export const UsersAPIservice = (baseURL: string) => {
     updateUserEntire(
       id: UserId,
       body: UpdUserEntireBody,
-      controller: AbortController
+      signal: AbortSignal
     ) {
-      return put<User>(usersEndpoints.getUserById(id), body, controller);
+      return put<User>(usersEndpoints.getUserById(id), body, signal);
     },
 
     //* update user partialy
@@ -72,15 +72,15 @@ export const UsersAPIservice = (baseURL: string) => {
     updateUserPartialy(
       id: UserId,
       body: UpdUserPartialyBody,
-      controller: AbortController
+      signal: AbortSignal
     ) {
-      return patch<UserResp>(usersEndpoints.getUserById(id), body, controller);
+      return patch<UserResp>(usersEndpoints.getUserById(id), body, signal);
     },
 
     //* delete user
     //* DELETE
-    deleteUser(id: UserId, controller: AbortController) {
-      return del<object>(usersEndpoints.getUserById(id), controller);
+    deleteUser(id: UserId, signal: AbortSignal) {
+      return del<object>(usersEndpoints.getUserById(id), signal);
     },
   };
 };
