@@ -15,14 +15,14 @@ export const useFetch = (baseURL: string) => {
     signal: AbortSignal,
     body: object | null = null,
     headers?: object
-  ): Promise<T> => {
+  ): Promise<T | any> => {
     const token = getToken() as string | undefined;
     const defaultHeader = {
       Accept: 'application/json',
       'Content-Type': 'application/json',
       ...(token && { Authorization: `Bearer ${token}` }),
     };
-    const options: any = { method, headers: headers || defaultHeader };
+    const options: { [x: string]: any; } = { method, headers: headers || defaultHeader };
 
     if (body) options.body = JSON.stringify(body);
     options.signal = signal;
@@ -30,22 +30,28 @@ export const useFetch = (baseURL: string) => {
     try {
       const response = await fetch(`${baseURL}${path}`, options);
       console.log({ response });
-
-      const result = await response.json();
-      console.log({ result });
-
-      return result;
+      if (response.ok) {
+        const result = await response.json();
+        if (result.code >= 400 && result.code <= 500) {
+          throw result;
+        }
+        return result;
+      } else {
+        throw response;
+      }
     } catch (error) {
       console.log({ error });
       handleError(error);
-      throw new Error(error);
     }
   };
 
-  const handleError = (error: Error): void => {
+  const handleError = (error: any): never => {
     if (error.name === "AbortError") console.log('Request aborted');
+    // if (error.status) {
 
-    console.log(error);
+    // }
+
+    throw error;
   };
 
   const get = <T>(path: string, signal: AbortSignal) =>
@@ -58,7 +64,7 @@ export const useFetch = (baseURL: string) => {
     customFetch<T>(FetchMethods.put, path, signal, body);
 
   const patch = <T>(path: string, body: object, signal: AbortSignal) =>
-    customFetch<T>(FetchMethods.put, path, signal, body);
+    customFetch<T>(FetchMethods.patch, path, signal, body);
 
   const del = <T>(path: string, signal: AbortSignal) =>
     customFetch<T>(FetchMethods.del, path, signal);

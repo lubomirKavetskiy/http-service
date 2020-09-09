@@ -14,7 +14,7 @@ export const TestComponent: React.FC = () => {
   const handleBtnClick = async () => {
     setLoader(true);
     api.users
-      .getUsersByParams(signal as AbortSignal, {address: {city: 'South Elvis'}})
+      .updateUserPartialy(8, {name: 'rtrt'}, signal)
       .then((res: any) => {
         console.log({resFromTestComponent: res});
         setData(res);
