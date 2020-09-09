@@ -1,4 +1,3 @@
-import React from 'react';
 import { getToken } from 'services';
 
 enum FetchMethods {
@@ -10,11 +9,10 @@ enum FetchMethods {
 }
 
 export const useFetch = (baseURL: string) => {
-  // [key in keyof typeof FetchMethods]: ;
   const customFetch = async <T>(
     method: FetchMethods,
     path: string,
-    controller?: AbortController,
+    { signal: controllerSignal }: AbortController,
     body: object | null = null,
     headers?: object
   ): Promise<T> => {
@@ -27,7 +25,7 @@ export const useFetch = (baseURL: string) => {
     const options: any = { method, headers: headers || defaultHeader };
 
     if (body) options.body = JSON.stringify(body);
-    if (controller) options.signal = controller.signal;
+    options.signal = controllerSignal;
 
     try {
       const response = await fetch(`${baseURL}${path}`, options);

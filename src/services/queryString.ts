@@ -4,7 +4,7 @@ export const stringifyObjectSearchParams = <T>(obj: T): string => {
 
   const setResult = (obj: T) => {
     for (const key in obj) {
-      let value = obj[key];
+      let value = obj[key] as Partial<T>;
 
       if (
         typeof value !== 'undefined' &&
@@ -24,12 +24,12 @@ export const stringifyObjectSearchParams = <T>(obj: T): string => {
             concatNestedObjParams = concatNestedObjParams
               ? `${concatNestedObjParams}.${key}`
               : key;
-            setResult((value as unknown) as T);
+            setResult(value as T);
           }
         } else {
           result.set(
             concatNestedObjParams ? `${concatNestedObjParams}.${key}` : key,
-            (value as unknown) as string
+            (value as string)
           );
           concatNestedObjParams = '';
         }
