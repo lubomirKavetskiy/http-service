@@ -1,10 +1,9 @@
-import {AxiosError} from 'axios';
+import { AxiosError } from 'axios';
 
 export const handleError = (
-  error: AxiosError<{message: string}>
-): Promise<any> => {
-  console.log({error});
-  const {response} = error;
+  error: AxiosError
+): never => {
+  const { response } = error;
 
   if (response?.status) {
     if (response.status >= 400 && response.status <= 500 && response.data) {
@@ -31,5 +30,5 @@ export const handleError = (
     }
   }
 
-  return Promise.reject(error);
+  throw error;
 };
