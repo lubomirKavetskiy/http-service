@@ -5,7 +5,7 @@ import {api} from 'services/API';
 import {User} from 'models';
 
 export const TestComponent: React.FC = () => {
-  const [data, setData] = useState<Partial<User> | null | any>(null);
+  const [data, setData] = useState<Partial<User> | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
   const {
     controller: {signal},
@@ -14,8 +14,8 @@ export const TestComponent: React.FC = () => {
   const handleBtnClick = async () => {
     setLoader(true);
     api.users
-      .updateUserPartialy(8, {name: 'rtrt'}, signal)
-      .then((res: any) => {
+      .getUsersByParams(signal, {})
+      .then(res => {
         console.log({resFromTestComponent: res});
         setData(res);
       })
