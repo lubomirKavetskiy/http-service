@@ -15,7 +15,7 @@ export const useFetch = (baseURL: string) => {
     signal: AbortSignal,
     body: object | null = null,
     headers?: object
-  ): Promise<T | any> => {
+  ): Promise<T> => {
     const token = getToken() as string | undefined;
     const defaultHeader = {
       Accept: 'application/json',
@@ -42,6 +42,7 @@ export const useFetch = (baseURL: string) => {
     } catch (error) {
       console.log({ error });
       handleError(error);
+      return Promise.reject(error);
     }
   };
 

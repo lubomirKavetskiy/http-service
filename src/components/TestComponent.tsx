@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 
 import {useAbortController} from 'useHooks';
 import {api} from 'services/API';
-import {User} from 'models';
+import {UsersCollectResp} from 'models';
 
 export const TestComponent: React.FC = () => {
-  const [data, setData] = useState<Partial<User> | null>(null);
+  const [data, setData] = useState<Partial<UsersCollectResp> | null>(null);
   const [loader, setLoader] = useState<boolean>(false);
   const {
     controller: {signal},
