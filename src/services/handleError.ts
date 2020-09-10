@@ -2,7 +2,8 @@ import { AxiosError } from 'axios';
 
 export const handleError = (
   error: AxiosError
-): never => {
+): Promise<AxiosError> => {
+  console.log({ error });
   const { response } = error;
 
   if (response?.status) {
@@ -30,5 +31,6 @@ export const handleError = (
     }
   }
 
-  throw error;
+  // throw error;
+  return Promise.reject(error);
 };

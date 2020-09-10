@@ -9,7 +9,6 @@ export abstract class MainAPI extends HttpClient {
 
   //don't use here such access modifiers as 'public' because it's by default, e.g. public get
   get<T>(path: string, params?: object, config?: object): Promise<T> {
-    console.log(config);
     return this.instance.get(`${this.baseURL}${path}`, {
       params,
       ...config,
