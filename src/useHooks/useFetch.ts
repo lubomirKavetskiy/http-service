@@ -46,6 +46,7 @@ export const useFetch = (baseURL: string) => {
   };
 
   const handleError = (error: any): never => {
+    console.log({ error });
     if (error.name === "AbortError") console.log('Request aborted');
     // if (error.status) {
 
