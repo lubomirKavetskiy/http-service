@@ -16,6 +16,8 @@ export abstract class HttpClient {
     this.#initializeResponseInterceptor();
   }
 
+  obj: object = {};
+
   //* add request interceptor
   //* it's private method, used '#methodOrPropertyTitle' instead of private 'methodOrPropertyTitle'
   #initializeRequestInterceptor = (): void => {
@@ -33,21 +35,25 @@ export abstract class HttpClient {
     );
   };
 
-  #handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig => ({
-    ...config,
-    headers: {
-      ...config.headers,
-      'X-Token': `Bearer ${getToken()}`
-    },
-  });
+  #handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig =>
+
+    ({
+      ...config,
+
+      headers: {
+        ...config.headers,
+        'X-Token': `Bearer ${getToken()}`
+      },
+    });
+
+
 
   //* *here can bea added servise for global storing data
   #handleResponse = <T>({ data }: AxiosResponse<T>): T => data;
 
-  //* global handle such errors as:
-  // - no internet
-  // - incorrect URL
-  // - incorrect endpoint
-  // - doesn't exist serche user's id
+  //* global handle errors
   #handleError = (error: AxiosError): Promise<AxiosError> => handleError(error);
+
+  source = axios.CancelToken.source();
+
 }

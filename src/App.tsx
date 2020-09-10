@@ -1,28 +1,17 @@
 import React, {useState} from 'react';
-
-import {api} from 'services/API';
+import {TestComponent} from 'components/TestComponent';
 
 export default function App() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [showComponent, setShowComponent] = useState<boolean>(true);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      await api.posts
-        // .updatePostPartialy(6, {body: 'errr'})
-        .getPosts()
-        .then(result => console.log(result));
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const toggleComponent = () => setShowComponent(prev => !prev);
 
   return (
-    <div className="App">
-      <button onClick={fetchData}>fetch</button>
-      {loading && <p>Loading data...</p>}
-    </div>
+    <>
+      <button onClick={toggleComponent}>
+        {showComponent ? 'hide Component' : 'show Component'}
+      </button>
+      {showComponent && <TestComponent />}
+    </>
   );
 }

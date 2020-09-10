@@ -1,4 +1,4 @@
-import {MainAPI} from 'services';
+import { MainAPI } from 'services';
 import {
   PostId,
   PostParams,
@@ -8,7 +8,7 @@ import {
   EntireUpdPostBody,
   PartialyUpdPostBoby,
 } from 'models';
-import {postsEndpoints} from './endpoints';
+import { postsEndpoints } from './endpoints';
 
 export class PostsAPIservice extends MainAPI {
   //* it's not necessary to assign the constructor but
@@ -26,8 +26,8 @@ export class PostsAPIservice extends MainAPI {
 
   //* get all or by such param as id or userId
   //* GET  /posts || /posts?id=1 || /posts?userId=1
-  getPosts(params?: Partial<PostParams>) {
-    return this.get<PostsCollectResp>(postsEndpoints.root, params);
+  getPosts(params?: Partial<PostParams>, config?: object) {
+    return this.get<PostsCollectResp>(postsEndpoints.root, params, config);
   }
 
   createPost(body: CreatePostBody) {
