@@ -30,7 +30,7 @@ export const TestComponent: React.FC = () => {
     []
   );
 
-  console.log({data});
+  data && console.log({data});
 
   return (
     <div>
