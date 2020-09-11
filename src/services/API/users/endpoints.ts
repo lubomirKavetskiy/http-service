@@ -1,6 +1,6 @@
-import {UserId} from 'models';
+import { UserId } from 'models';
 
-const root = '/users';
+const root = '/userstt';
 
 export const usersEndpoints = {
   root,

@@ -14,9 +14,8 @@ export const TestComponent: React.FC = () => {
   const handleBtnClick = async () => {
     setLoader(true);
     api.users
-      .getUsersByParams(signal, {})
+      .getUsersByParams(signal, {id: 99999})
       .then(res => {
-        console.log({resFromTestComponent: res});
         setData(res);
       })
       .catch(err => console.log({errorFromTestComponent: err}))

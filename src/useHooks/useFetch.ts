@@ -1,4 +1,4 @@
-import { getToken } from 'services';
+import { getToken, handleError } from 'services';
 
 enum FetchMethods {
   get = 'GET',
@@ -29,7 +29,7 @@ export const useFetch = (baseURL: string) => {
 
     try {
       const response = await fetch(`${baseURL}${path}`, options);
-      console.log({ response });
+
       if (response.ok) {
         const result = await response.json();
         if (result.code >= 400 && result.code <= 500) {
@@ -40,21 +40,12 @@ export const useFetch = (baseURL: string) => {
         throw response;
       }
     } catch (error) {
-      console.log({ error });
       handleError(error);
+
       return Promise.reject(error);
     }
   };
 
-  const handleError = (error: any): never => {
-    console.log({ error });
-    if (error.name === "AbortError") console.log('Request aborted');
-    // if (error.status) {
-
-    // }
-
-    throw error;
-  };
 
   const get = <T>(path: string, signal: AbortSignal) =>
     customFetch<T>(FetchMethods.get, path, signal);
