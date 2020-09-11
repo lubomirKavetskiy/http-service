@@ -1,7 +1,7 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError, Cancel } from 'axios';
 
-import { getToken } from 'services';
-import { handleError } from 'services';
+import { getToken, errorHandler } from 'services';
+
 
 export abstract class HttpClient {
   //assigned it like a protected for accessible it in inherited classes as well
@@ -36,24 +36,21 @@ export abstract class HttpClient {
   };
 
   #handleRequest = (config: AxiosRequestConfig): AxiosRequestConfig =>
-
     ({
       ...config,
-
       headers: {
         ...config.headers,
         'X-Token': `Bearer ${getToken()}`
       },
     });
 
-
-
   //* *here can bea added servise for global storing data
   #handleResponse = <T>({ data }: AxiosResponse<T>): T => data;
 
   //* global handle errors
-  #handleError = (error: AxiosError): Promise<AxiosError> => handleError(error);
+  #handleError = (error: AxiosError | { isCanceled: boolean; }): Promise<AxiosError | { isCanceled: boolean; }> => {
+    if (axios.isCancel(error)) error = { ...error, isCanceled: true };
 
-  source = axios.CancelToken.source();
-
+    return errorHandler(error);
+  };
 }
