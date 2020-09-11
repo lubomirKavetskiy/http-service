@@ -19,30 +19,30 @@ export class PostsAPIservice extends MainAPI {
 
   //* get unique post by its id
   //* GET 	/posts/id
-  getPostById(id: PostId) {
+  getPostById(id: PostId, config?: object) {
     //* use this without super ???
-    return this.get<PostResp>(postsEndpoints.getPostById(id));
+    return this.get<PostResp>(postsEndpoints.getPostById(id), config);
   }
 
   //* get all or by such param as id or userId
   //* GET  /posts || /posts?id=1 || /posts?userId=1
-  getPosts(params?: Partial<PostParams>, config?: object) {
+  getPosts(params: Partial<PostParams>, config?: object) {
     return this.get<PostsCollectResp>(postsEndpoints.root, params, config);
   }
 
-  createPost(body: CreatePostBody) {
-    return this.post<PostResp>(postsEndpoints.root, body);
+  createPost(body: CreatePostBody, config?: object) {
+    return this.post<PostResp>(postsEndpoints.root, body, config);
   }
 
-  updatePostEntire(id: PostId, body: EntireUpdPostBody) {
-    return this.put<PostResp>(postsEndpoints.getPostById(id), body);
+  updatePostEntire(id: PostId, body: EntireUpdPostBody, config?: object) {
+    return this.put<PostResp>(postsEndpoints.getPostById(id), body, config);
   }
 
-  updatePostPartialy(id: PostId, body: PartialyUpdPostBoby) {
-    return this.patch<PostResp>(postsEndpoints.getPostById(id), body);
+  updatePostPartialy(id: PostId, body: PartialyUpdPostBoby, config?: object) {
+    return this.patch<PostResp>(postsEndpoints.getPostById(id), body, config);
   }
 
-  deletePostById(id: PostId) {
-    return this.delete<object>(postsEndpoints.getPostById(id));
+  deletePostById(id: PostId, config?: object) {
+    return this.delete<object>(postsEndpoints.getPostById(id), config);
   }
 }
