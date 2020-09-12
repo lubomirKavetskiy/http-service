@@ -9,7 +9,6 @@ export const TestComponent: React.FC = () => {
   const sourse = axios.CancelToken.source();
   const mountedRef = useRef<boolean>(true);
 
-  console.log();
   const onBtnClick = async () => {
     setLoader(true);
 

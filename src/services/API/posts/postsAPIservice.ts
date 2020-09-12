@@ -20,7 +20,6 @@ export class PostsAPIservice extends MainAPI {
   //* get unique post by its id
   //* GET 	/posts/id
   getPostById(id: PostId, config?: object) {
-    //* use this without super ???
     return this.get<PostResp>(postsEndpoints.getPostById(id), config);
   }
 
@@ -30,18 +29,22 @@ export class PostsAPIservice extends MainAPI {
     return this.get<PostsCollectResp>(postsEndpoints.root, params, config);
   }
 
+  //* POST
   createPost(body: CreatePostBody, config?: object) {
     return this.post<PostResp>(postsEndpoints.root, body, config);
   }
 
+  //* PUT
   updatePostEntire(id: PostId, body: EntireUpdPostBody, config?: object) {
     return this.put<PostResp>(postsEndpoints.getPostById(id), body, config);
   }
 
+  //* PATCH
   updatePostPartialy(id: PostId, body: PartialyUpdPostBoby, config?: object) {
     return this.patch<PostResp>(postsEndpoints.getPostById(id), body, config);
   }
 
+  //* DELETE
   deletePostById(id: PostId, config?: object) {
     return this.delete<object>(postsEndpoints.getPostById(id), config);
   }

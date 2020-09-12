@@ -15,10 +15,10 @@ export interface CommentResp {
   body: string;
 }
 
-export interface CommentsCollectResp extends Array<CommentResp> {}
+export interface CommentsCollectResp extends Array<CommentResp> { }
 
-export interface CreateCommentBody extends Omit<CommentResp, 'id'> {}
+export interface CreateCommentBody extends Omit<CommentResp, 'id'> { }
 
-export interface EntireUpdCommentBoby extends CreateCommentBody {}
-//@TODO atleast one key of object
-export interface PartialyUpdCommentBoby extends Partial<CreateCommentBody> {}
+export interface EntireUpdCommentBoby extends CreateCommentBody { }
+
+export interface PartialyUpdCommentBoby extends Partial<CreateCommentBody> { }

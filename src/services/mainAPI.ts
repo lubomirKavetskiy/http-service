@@ -15,24 +15,28 @@ export abstract class MainAPI extends HttpClient {
     });
   }
 
+  //* POST
   post<T>(path: string, body: object, config?: object): Promise<T> {
     return this.instance.post(`${this.baseURL}${path}`, body, {
       ...config,
     });
   }
 
+  //* PUT
   put<T>(path: string, body: object, config?: object): Promise<T> {
     return this.instance.put(`${this.baseURL}${path}`, body, {
       ...config,
     });
   }
 
+  //* PATCH
   patch<T>(path: string, body: object, config?: object): Promise<T> {
     return this.instance.patch(`${this.baseURL}${path}`, body, {
       ...config,
     });
   }
 
+  //* DELETE
   delete<T>(path: string, config?: object): Promise<T> {
     return this.instance.patch(`${this.baseURL}${path}`, {
       ...config,
