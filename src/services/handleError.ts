@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 
-const isAxiosErr = (err: any): err is AxiosError => err.isAxiosErr;
+const isAxiosErr = (err: any): err is AxiosError => err.isAxiosError;
 
 export const errorHandler = (
   error: AxiosError | { isCanceled: boolean; }
