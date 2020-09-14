@@ -9,7 +9,7 @@ export const TestComponent: React.FC = () => {
   const sourse = axios.CancelToken.source();
   const mountedRef = useRef<boolean>(true);
 
-  const onBtnClick = async () => {
+  const onBtnClick = () => {
     setLoader(true);
 
     api.posts
@@ -18,6 +18,19 @@ export const TestComponent: React.FC = () => {
       .catch(err => console.log({errorFromTestComponent: err}))
       .finally(() => mountedRef.current && setLoader(false));
   };
+
+  // const onBtnClick = async () => {
+  //   setLoader(true);
+
+  //   try {
+  //     const data = await api.posts.getPosts({}, {cancelToken: sourse.token});
+  //     setData(data);
+  //   } catch (err) {
+  //     console.log({errorFromTestComponent: err});
+  //   } finally {
+  //     mountedRef.current && setLoader(false);
+  //   }
+  // };
 
   useEffect(
     () => () => {
