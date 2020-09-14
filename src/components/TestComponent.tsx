@@ -11,7 +11,7 @@ export const TestComponent: React.FC = () => {
     controller: {signal},
   } = useAbortController();
 
-  const handleBtnClick = async () => {
+  const handleBtnClick = () => {
     setLoader(true);
     api.users
       .getUsersByParams(signal, {})

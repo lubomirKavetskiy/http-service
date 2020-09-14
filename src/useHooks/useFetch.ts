@@ -13,8 +13,8 @@ export const useFetch = (baseURL: string) => {
     method: FetchMethods,
     path: string,
     signal: AbortSignal,
-    body: object | null = null,
-    headers?: object
+    body: Body | null = null,
+    headers?: Headers
   ): Promise<T> => {
     const token = getToken() as string | undefined;
     const defaultHeader = {
